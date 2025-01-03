@@ -11,6 +11,7 @@ namespace DOCKER_RABBITMQ_ASPNET.Controllers
     [Route("[controller]")]
     public class RabitMqController : ControllerBase
     {
+        //TODO: senaryo oluşturmaya öşendim rastgele deneme diye bir class açtım
         public class deneme
         {
             public string degisken { get; set; }
@@ -42,9 +43,9 @@ namespace DOCKER_RABBITMQ_ASPNET.Controllers
             }
         }
         [HttpGet]
-        public List<string> GetMessagesFromQueue()
+        public List<deneme> GetMessagesFromQueue()
         {
-            var messages = new List<string>();
+            var messages = new List<deneme>();
             var factory = new ConnectionFactory()
             {
                 HostName = "localhost",
@@ -77,7 +78,7 @@ namespace DOCKER_RABBITMQ_ASPNET.Controllers
                     // Mesajın gövdesini UTF8'e çevir ve listeye ekle
                     var message = Encoding.UTF8.GetString(result.Body.ToArray());
                     deneme dene = System.Text.Json.JsonSerializer.Deserialize<deneme>(message);
-                    messages.Add(message);
+                    messages.Add(dene);
                 }
             }
 
