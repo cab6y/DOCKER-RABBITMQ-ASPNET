@@ -44,7 +44,7 @@ namespace DOCKER_RABBITMQ_ASPNET.Controllers
 
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
-            {
+            { 
                 // Kuyruk adı tanımlanmalı
                 channel.QueueDeclare(queue: "NameQueue",
                     durable: false,
