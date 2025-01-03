@@ -11,10 +11,16 @@ namespace DOCKER_RABBITMQ_ASPNET.Controllers
     [Route("[controller]")]
     public class RabitMqController : ControllerBase
     {
+        public class deneme
+        {
+            public string degisken { get; set; }
+        }
         [HttpPost]
         public void SendNameToQueue(string name)
         {
-            var factory = new ConnectionFactory() { HostName = "localhost", UserName = "cihan", Password = "SivasSpor123*" };//Konfigurasyondan alınabilir            
+            deneme dene = new deneme();
+            dene.degisken = name;
+            var factory = new ConnectionFactory() { HostName = "localhost", UserName = "cihan", Password = "sivas1923*" };//Konfigurasyondan alınabilir            
             using (IConnection connection = factory.CreateConnection())
             using (IModel channel = connection.CreateModel())
             {
@@ -24,7 +30,11 @@ namespace DOCKER_RABBITMQ_ASPNET.Controllers
                     autoDelete: false,
                     arguments: null);//Exchange parametre tanımları.          
 
-                var body = Encoding.UTF8.GetBytes(name); //Model alınarak json serialize uygulanabilir.
+                // Nesneyi JSON formatına dönüştür
+                string json = System.Text.Json.JsonSerializer.Serialize(dene);
+
+                // JSON stringini byte dizisine dönüştür
+                var body = Encoding.UTF8.GetBytes(json);
 
                 channel.BasicPublish(exchange: "",
                     routingKey: "NameQueue",
@@ -38,8 +48,8 @@ namespace DOCKER_RABBITMQ_ASPNET.Controllers
             var factory = new ConnectionFactory()
             {
                 HostName = "localhost",
-                UserName = "enes",
-                Password = "enes123"
+                UserName = "cihan",
+                Password = "sivas1923*"
             };
 
             using (var connection = factory.CreateConnection())
@@ -66,6 +76,7 @@ namespace DOCKER_RABBITMQ_ASPNET.Controllers
 
                     // Mesajın gövdesini UTF8'e çevir ve listeye ekle
                     var message = Encoding.UTF8.GetString(result.Body.ToArray());
+                    deneme dene = System.Text.Json.JsonSerializer.Deserialize<deneme>(message);
                     messages.Add(message);
                 }
             }
