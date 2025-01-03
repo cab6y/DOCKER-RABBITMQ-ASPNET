@@ -14,7 +14,7 @@ namespace DOCKER_RABBITMQ_ASPNET.Controllers
         [HttpPost]
         public void SendNameToQueue(string name)
         {
-            var factory = new ConnectionFactory() { HostName = "localhost", UserName = "enes", Password = "enes123" };//Konfigurasyondan alınabilir            
+            var factory = new ConnectionFactory() { HostName = "localhost", UserName = "cihan", Password = "SivasSpor123*" };//Konfigurasyondan alınabilir            
             using (IConnection connection = factory.CreateConnection())
             using (IModel channel = connection.CreateModel())
             {
